@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+body {
+  background-color: #111827;
+  color: #F9FAFB;
+  font-family: 'Inter', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.primary-btn-ui {
+    @apply bg-lime-400 text-gray-900 font-semibold transition-all duration-300 ease-in-out;
+}
+.primary-btn-ui:hover {
+    @apply bg-lime-500 -translate-y-0.5 shadow-lg shadow-lime-500/20;
+}
+.secondary-btn-ui {
+    @apply bg-transparent border border-gray-700 text-white transition-all duration-300 ease-in-out;
+}
+.secondary-btn-ui:hover {
+    @apply bg-gray-800 border-gray-600;
+}
+.section-title-ui {
+    @apply border-b-2 border-lime-400;
+}
+.payment-tab {
+    @apply cursor-pointer py-2 px-4 border-b-2 border-transparent text-gray-400 transition-all duration-300 ease-in-out;
+}
+.payment-tab.active {
+    @apply border-lime-400 text-white font-medium;
+}
+.sub-payment-tab {
+    @apply cursor-pointer py-2 px-3 rounded-md text-gray-300 bg-gray-800 border border-gray-700 transition-all duration-300 ease-in-out text-sm;
+}
+.sub-payment-tab.active {
+    @apply bg-lime-400 text-gray-900 font-semibold border-lime-400;
+}
+.form-input {
+  @apply bg-gray-800 border border-gray-700 text-white w-full p-3 rounded-md transition-all duration-300 ease-in-out;
+}
+.form-input:focus {
+    @apply outline-none border-lime-400 ring-2 ring-lime-400/30;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
 }
-
-.App-link {
-  color: #61dafb;
+.fade-in-start {
+    opacity: 0;
 }
+.delay-200 { animation-delay: 200ms; }
+.delay-400 { animation-delay: 400ms; }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
