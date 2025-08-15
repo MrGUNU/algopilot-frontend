@@ -35,7 +35,7 @@ const LoginView = ({ onLoginSuccess, showRegister, showNotification }) => {
 };
 
 // Register Form Component
-const RegisterView = ({ showLogin, showNotification }) => {
+const RegisterView = ({ showLogin, showNotification, onLoginSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -48,8 +48,10 @@ const RegisterView = ({ showLogin, showNotification }) => {
             const response = await fetch('http://localhost:3001/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password }) });
             const data = await response.json();
             if (!response.ok) throw new Error(data.message || 'Registration failed');
-            showNotification('Registration successful! Please log in.', true);
-            showLogin();
+            
+            showNotification('Registration successful! Logging you in...', true);
+            onLoginSuccess(email); // Register ke baad direct login
+
         } catch (error) {
             showNotification(error.message, false);
         } finally {
@@ -85,7 +87,11 @@ const WelcomePage = ({ onLoginSuccess, showNotification }) => {
                 {isLoginView ? (
                     <LoginView onLoginSuccess={onLoginSuccess} showRegister={() => setIsLoginView(false)} showNotification={showNotification} />
                 ) : (
-                    <RegisterView showLogin={() => setIsLoginView(true)} showNotification={showNotification} />
+                    <RegisterView 
+                        showLogin={() => setIsLoginView(true)} 
+                        showNotification={showNotification} 
+                        onLoginSuccess={onLoginSuccess}
+                    />
                 )}
             </div>
         </div>

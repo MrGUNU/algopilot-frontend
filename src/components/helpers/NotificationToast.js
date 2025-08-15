@@ -1,5 +1,3 @@
-import React from 'react';
-
 const NotificationToast = ({ message, isSuccess, visible }) => {
     if (!visible) return null;
     const bgColor = isSuccess ? 'bg-green-500' : 'bg-red-500';

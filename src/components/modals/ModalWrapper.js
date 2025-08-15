@@ -1,21 +1,10 @@
-import { useState } from 'react';
-import ModalWrapper from './ModalWrapper';
+const ModalWrapper = ({ children, onClose, maxWidth = 'max-w-md' }) => (
+    <div className="fixed inset-0 z-[100] overflow-y-auto bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className={`bg-[#111827] border border-gray-700 rounded-lg shadow-2xl w-full ${maxWidth} p-6 sm:p-8 relative`}>
+            <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition-colors">&times;</button>
+            {children}
+        </div>
+    </div>
+);
 
-const RegisterModal = ({ onClose, onShowLogin, showNotification }) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const handleSubmit = async (e) => { e.preventDefault(); setIsLoading(true); const name = e.target.name.value; const email = e.target.email.value; const password = e.target.password.value; try { const response = await fetch('http://localhost:3001/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password }), }); const data = await response.json(); if (!response.ok) throw new Error(data.message || 'Registration failed'); showNotification('Registration successful! Please log in.'); onShowLogin(); } catch (error) { showNotification(error.message, false); } finally { setIsLoading(false); } };
-    return (
-        <ModalWrapper onClose={onClose}>
-            <h2 className="text-2xl font-bold text-white text-center mb-6">Create an Account</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4"><label className="block text-gray-400 mb-2">Full Name</label><input type="text" name="name" className="w-full p-3 rounded-md form-input" required /></div>
-                <div className="mb-4"><label className="block text-gray-400 mb-2">Email</label><input type="email" name="email" className="w-full p-3 rounded-md form-input" required /></div>
-                <div className="mb-6"><label className="block text-gray-400 mb-2">Password</label><input type="password" name="password" className="w-full p-3 rounded-md form-input" required /></div>
-                <button type="submit" className="w-full primary-btn-ui font-bold py-3 rounded-md" disabled={isLoading}>{isLoading ? 'Registering...' : 'Register'}</button>
-            </form>
-            <p className="text-center text-gray-400 mt-6">Already have an account? <button onClick={onShowLogin} className="text-lime-400 font-semibold hover:underline">Login here</button></p>
-        </ModalWrapper>
-    );
-};
-
-export default RegisterModal;
+export default ModalWrapper;

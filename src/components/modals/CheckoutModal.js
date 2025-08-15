@@ -7,47 +7,7 @@ const CheckoutModal = ({ onClose, item, showNotification }) => {
     const [activeSubTab, setActiveSubTab] = useState('card');
     const [isLoading, setIsLoading] = useState(false);
 
-    const handlePayment = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        const formData = new FormData(e.target);
-        const billingInfo = {
-            firstName: formData.get('firstName'),
-            lastName: formData.get('lastName'),
-            email: formData.get('email'),
-        };
-        const accountCredentials = {
-            platform: platform,
-            mtLogin: formData.get('mtLogin'),
-            mtPassword: formData.get('mtPassword'),
-            brokerName: formData.get('brokerName'),
-            serverName: formData.get('serverName'),
-        };
-
-        try {
-            const response = await fetch('http://localhost:3001/api/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    product: item.product,
-                    price: item.price,
-                    paymentMethod: activeTab,
-                    subMethod: activeTab === 'indian_gw' ? activeSubTab : null,
-                    billingInfo,
-                    accountCredentials
-                }),
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Payment failed');
-            showNotification('Payment successful! Your order is confirmed.');
-            onClose();
-        } catch (error) {
-            showNotification(error.message, false);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
+    const handlePayment = async (e) => { e.preventDefault(); setIsLoading(true); const formData = new FormData(e.target); const billingInfo = { firstName: formData.get('firstName'), lastName: formData.get('lastName'), email: formData.get('email'), }; const accountCredentials = { platform: platform, mtLogin: formData.get('mtLogin'), mtPassword: formData.get('mtPassword'), brokerName: formData.get('brokerName'), serverName: formData.get('serverName'), }; try { const response = await fetch('http://localhost:3001/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product: item.product, price: item.price, paymentMethod: activeTab, subMethod: activeTab === 'indian_gw' ? activeSubTab : null, billingInfo, accountCredentials }), }); const data = await response.json(); if (!response.ok) throw new Error(data.message || 'Payment failed'); showNotification('Payment successful! Your order is confirmed.'); onClose(); } catch (error) { showNotification(error.message, false); } finally { setIsLoading(false); } };
     const getPayButtonText = () => { if (activeTab === 'indian_gw') { if (activeSubTab === 'card') return 'Pay with Card'; if (activeSubTab === 'upi') return 'Confirm UPI Payment'; if (activeSubTab === 'netbanking') return 'Proceed to Bank'; } if (activeTab === 'crypto') return 'I have completed the payment'; return 'Pay Now'; };
     const indianBanks = ["State Bank of India", "HDFC Bank", "ICICI Bank", "Punjab National Bank", "Bank of Baroda", "Axis Bank", "Canara Bank", "Union Bank of India", "Kotak Mahindra Bank", "Indian Bank", "Bank of India", "Central Bank of India", "IndusInd Bank", "Yes Bank", "IDBI Bank", "Federal Bank", "Bank of Maharashtra", "UCO Bank", "Indian Overseas Bank", "Punjab & Sind Bank", "South Indian Bank", "Karur Vysya Bank", "Karnataka Bank", "Jammu & Kashmir Bank", "Dhanlaxmi Bank", "City Union Bank", "Tamilnad Mercantile Bank", "Nainital Bank", "RBL Bank", "IDFC First Bank", "Bandhan Bank", "CSB Bank", "DCB Bank", "Equitas Small Finance Bank", "ESAF Small Finance Bank", "Fincare Small Finance Bank", "Jana Small Finance Bank", "North East Small Finance Bank", "Suryoday Small Finance Bank", "Ujjivan Small Finance Bank", "Utkarsh Small Finance Bank", "Shivalik Small Finance Bank", "Unity Small Finance Bank", "Airtel Payments Bank", "India Post Payments Bank", "Fino Payments Bank", "Jio Payments Bank", "Paytm Payments Bank", "NSDL Payments Bank"];
 

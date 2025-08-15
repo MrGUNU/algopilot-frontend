@@ -8,9 +8,8 @@ import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
 import CheckoutModal from './components/modals/CheckoutModal';
 import NotificationToast from './components/helpers/NotificationToast';
-import WelcomePage from './components/WelcomePage'; // Naya component import karein
+import WelcomePage from './components/WelcomePage';
 
-// Yeh component ab sirf main website dikhayega
 const HomePage = ({ user, onLogoutClick, onBuyNow }) => (
     <>
         <Header user={user} onLogoutClick={onLogoutClick} />
@@ -24,7 +23,6 @@ const HomePage = ({ user, onLogoutClick, onBuyNow }) => (
     </>
 );
 
-// Main App Component
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
