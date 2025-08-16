@@ -1,4 +1,4 @@
-import useScrollFadeIn from '../hooks/useScrollFadeIn';
+import useScrollFadeIn from '../hooks/useScrollFadeIn'; // Yeh line add ki gayi hai
 
 const AboutSection = () => {
     const sectionRef = useScrollFadeIn();
